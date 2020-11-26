@@ -1,0 +1,21 @@
+version: '3.1'
+
+services:
+  app:
+    container_name: docker-ts-node
+    restart: always
+    build: .
+    command: npm run build
+    environment:
+      NODE_ENV: production
+    ports:
+      - '4000:4000'
+    volumes: &appvolumes
+      - ./:/app:delegated
+    links: 
+      - mongo
+  mongo:
+    container_name: mongo
+    image: mongo
+    ports:
+      - "27017:27017"
